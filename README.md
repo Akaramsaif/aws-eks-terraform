@@ -234,3 +234,27 @@ Check CloudWatch Logs Console → You should see separate log groups like
 
 /aws/eks/USVGA10915-EKS-D001/frontend
 /aws/eks/USVGA10915-EKS-D001/cdkgapp
+
+
+
+
+
+
+
+
+Kubernetes Metrics Server deployed to enable autoscaling (HPA) and resource monitoring.  
+Commands to deploy and test the Metrics Server:  
+
+Deploy metrics service  
+
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml 
+
+Verify metrics server is running 
+
+kubectl get deployment metrics-server -n kube-system 
+
+Test metrics service 
+
+kubectl top nodes 
+
+kubectl top pods --all-namespaces
