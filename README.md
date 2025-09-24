@@ -4,27 +4,28 @@ Create a step by step document.
 What is Kubernetics and why kubernetes.
 What are the pre-requisite to provision the EKS Cluster? How to setup the Kubernetes Using the Terraform? 
 
-Logging and Monitoring of EKS 
+How to Logging and Monitoring of EKS using the cloud watch?
 
-Fluent Bit configured to collect container logs and forward them to Amazon CloudWatch.  
+Fluent Bit to be configure to collect container logs and forward them to Amazon CloudWatch.  
 
 Step by Step Setup:
 
 Create IAM Role with below trust policy
 
+<img width="1855" height="797" alt="image" src="https://github.com/user-attachments/assets/70f5c837-5948-4044-973f-21fcfd1fb004" />
 
-image-20250923-084411.png
  
 
 Create & attach Fluent Bit Policy to the IAM Role. 
 
+<img width="1843" height="623" alt="image" src="https://github.com/user-attachments/assets/2ff7bdc0-e351-4cf4-b58b-cb5764a2d06f" />
 
-image-20250923-084610.png
+
+
 Create the Kubernetes namespace using below command. 
 
-
-
-kubectl create namespace amazon-cloudwatch
+        kubectl create namespace amazon-cloudwatch
+        
 Create a service account manifest fluent-bit-sa.yaml
 
 
@@ -38,6 +39,8 @@ metadata:
 
 
 kubectl apply -f fluent-bit-sa.yaml
+
+
 Create the Fluent Bit ConfigMap fluent-bit-configmap.yaml
 
 
@@ -111,7 +114,12 @@ data:
         Time_Keep           On
 
 
+
+
 kubectl apply -f fluent-bit-configmap.yaml
+
+
+
 Deploy the Fluent Bit DeamonSet fluent-bit-ds.yaml
 
 
@@ -167,6 +175,9 @@ spec:
 
 
 kubectl apply -f fluent-bit-ds.yaml
+
+
+
 Create ClusterRole for Service Account we created fluent-bit-clusterrole.yaml
 
 
@@ -184,6 +195,10 @@ rules:
 
 
 kubectl apply -f fluent-bit-clusterrole.yaml
+
+
+
+
 Create ClusterRoleBinding for Service Account we created fluent-bit-clusterrolebinding.yaml
 
 
